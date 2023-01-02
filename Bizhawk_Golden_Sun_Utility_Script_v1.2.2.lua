@@ -1691,36 +1691,39 @@ if memory.read_u8(0x030009A4) == 0x9C and memory.read_u8(0x0200006A) == 0x4 and 
   --gui.scaledtext(0,160, " Luc: " .. memory.read_u8(BaseLuc+CharMemDiff*CurrentChar), StatColor[6])
 
   -- This code is for stat selection
-  if keypress["I"]==true and keypress["K"]==nil and statstate == false then -- moves the highlghted stat up
+  if keypress["I"] == true and keypress["K"] == nil and statstate == false then -- moves the highlghted stat up
       statstate = true
-    StatColor[6]=StatColor[1]
-    for i=1,5 do
-      StatColor[i] = StatColor[i+1] -- 1<-2,2<-3...6<-1 -- 7
-    end
-    SelectedStat = SelectedStat-1 - math.floor((SelectedStat-1)/5)*5
+      StatColor[6] = StatColor[1]
+      for i = 1, 5 do
+          StatColor[i] = StatColor[i + 1] -- 1<-2,2<-3...6<-1 -- 7
+      end
+      SelectedStat = SelectedStat - 1 - math.floor((SelectedStat - 1) / 5) * 5
   end
-  if keypress["K"]==true and keypress["I"]==nil and statstate == false then -- moves the highlighted stat down
+  if keypress["K"] == true and keypress["I"] == nil and statstate == false then -- moves the highlighted stat down
       statstate = true
-    for i=1,5 do
-      StatColor[7-i] = StatColor[6-i] -- 6=5, 5=4,... 2=1, then 1=6
-    end
-    StatColor[1]=StatColor[6]
-    SelectedStat = SelectedStat+1 - math.floor((SelectedStat+1)/5)*5
+      for i = 1, 5 do
+          StatColor[7 - i] = StatColor[6 - i] -- 6=5, 5=4,... 2=1, then 1=6
+      end
+      StatColor[1] = StatColor[6]
+      SelectedStat = SelectedStat + 1 - math.floor((SelectedStat + 1) / 5) * 5
   end
 
   -- This code is for stat manipulation
-  if keypress["L"]==true and statstate == false then
-    statstate = true
-    memory.write_u16_le(WhichStat(SelectedStat,CurrentChar),memory.read_u16_le(WhichStat(SelectedStat,CurrentChar))+1)
+  if keypress["L"] == true and statstate == false then
+      statstate = true
+      memory.write_u16_le(WhichStat(SelectedStat, CurrentChar),
+          memory.read_u16_le(WhichStat(SelectedStat, CurrentChar)) + 1)
   end
-  if keypress["J"]==true and statstate == false then
-    statstate = true
-    memory.write_u16_le(WhichStat(SelectedStat,CurrentChar),memory.read_u16_le(WhichStat(SelectedStat,CurrentChar))-1)
+  if keypress["J"] == true and statstate == false then
+      statstate = true
+      memory.write_u16_le(WhichStat(SelectedStat, CurrentChar),
+          memory.read_u16_le(WhichStat(SelectedStat, CurrentChar)) - 1)
   end
 
   -- Reset statstate
-  if keypress["I"]==nil and keypress["K"]==nil and  keypress["J"]==nil and  keypress["L"]==nil and statstate == true then
-    statstate = false
+  if keypress["I"] == nil and keypress["K"] == nil and keypress["J"] == nil and keypress["L"] == nil and statstate ==
+      true then
+      statstate = false
   end
 
 
